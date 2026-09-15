@@ -1,82 +1,121 @@
-// ==============================
-// NORTH — INTERAÇÕES
-// ==============================
+/* =====================================================
+   NORTH — SCRIPT
+   ===================================================== */
 
 
-// HEADER AO ROLAR
-
-const header = document.querySelector(".header");
-
-window.addEventListener("scroll", () => {
-    if (window.scrollY > 50) {
-        header.classList.add("scrolled");
-    } else {
-        header.classList.remove("scrolled");
-    }
-});
-
-
-// CURSOR
+/* =====================================================
+   CUSTOM CURSOR
+   ===================================================== */
 
 const cursor = document.querySelector(".cursor");
+const follower = document.querySelector(".cursor-follower");
 
-if (cursor && window.innerWidth > 800) {
+if (cursor && follower && window.innerWidth > 700) {
+
+    let mouseX = 0;
+    let mouseY = 0;
+
+    let followerX = 0;
+    let followerY = 0;
 
     document.addEventListener("mousemove", (event) => {
-        cursor.style.left = `${event.clientX}px`;
-        cursor.style.top = `${event.clientY}px`;
+
+        mouseX = event.clientX;
+        mouseY = event.clientY;
+
+        cursor.style.left = mouseX + "px";
+        cursor.style.top = mouseY + "px";
+
     });
 
+
+    function animateFollower() {
+
+        followerX += (mouseX - followerX) * 0.12;
+        followerY += (mouseY - followerY) * 0.12;
+
+        follower.style.left = followerX + "px";
+        follower.style.top = followerY + "px";
+
+        requestAnimationFrame(animateFollower);
+    }
+
+    animateFollower();
+
+
     const interactiveElements = document.querySelectorAll(
-        "a, button, .system, .work-card"
+        "a, button, .system-item, .founder-image-wrap"
     );
 
     interactiveElements.forEach((element) => {
 
         element.addEventListener("mouseenter", () => {
-            cursor.classList.add("active");
+
+            follower.style.width = "48px";
+            follower.style.height = "48px";
+            follower.style.background = "rgba(255,255,255,.05)";
+
         });
 
         element.addEventListener("mouseleave", () => {
-            cursor.classList.remove("active");
+
+            follower.style.width = "28px";
+            follower.style.height = "28px";
+            follower.style.background = "transparent";
+
         });
 
     });
+
 }
 
 
-// MENU MOBILE
+/* =====================================================
+   MOBILE MENU
+   ===================================================== */
 
 const menuButton = document.querySelector(".menu-button");
-const nav = document.querySelector(".nav");
+const mobileMenu = document.querySelector(".mobile-menu");
 
-if (menuButton && nav) {
+if (menuButton && mobileMenu) {
 
     menuButton.addEventListener("click", () => {
 
-        nav.classList.toggle("mobile-open");
+        mobileMenu.classList.toggle("active");
+
+    });
+
+
+    const mobileLinks = mobileMenu.querySelectorAll("a");
+
+    mobileLinks.forEach((link) => {
+
+        link.addEventListener("click", () => {
+
+            mobileMenu.classList.remove("active");
+
+        });
 
     });
 
 }
 
 
-// FECHAR MENU AO CLICAR
+/* =====================================================
+   SCROLL REVEAL
+   ===================================================== */
 
-document.querySelectorAll(".nav a").forEach((link) => {
+const revealElements = document.querySelectorAll(
+    ".section-header, .system-item, .process-item, .founder-content, .founder-visual, .work-card, .contact-content"
+);
 
-    link.addEventListener("click", () => {
-
-        nav.classList.remove("mobile-open");
-
-    });
-
+revealElements.forEach((element) => {
+    element.classList.add("reveal");
 });
 
 
-// REVEAL AO ENTRAR NA TELA
-
 const observer = new IntersectionObserver(
+
     (entries) => {
 
         entries.forEach((entry) => {
@@ -85,36 +124,65 @@ const observer = new IntersectionObserver(
 
                 entry.target.classList.add("visible");
 
+                observer.unobserve(entry.target);
+
             }
 
         });
 
     },
+
     {
         threshold: 0.12
     }
+
 );
 
 
-document
-    .querySelectorAll(
-        ".statement-content, .system, .work-card, .process-grid article, .about-content, .contact-content"
-    )
-    .forEach((element) => {
+revealElements.forEach((element) => {
 
-        observer.observe(element);
+    observer.observe(element);
+
+});
+
+
+/* =====================================================
+   IMAGE CHECK
+   ===================================================== */
+
+const founderImage = document.querySelector(".founder-image");
+
+if (founderImage) {
+
+    founderImage.addEventListener("error", () => {
+
+        console.warn(
+            "A imagem do Founder não foi encontrada. Verifique se o arquivo se chama exatamente: eduardo.jpg.jpeg"
+        );
 
     });
 
+}
 
-// ANO AUTOMÁTICO
 
-const yearElements = document.querySelectorAll(
-    ".footer-bottom span:first-child"
-);
+/* =====================================================
+   HEADER BACKGROUND
+   ===================================================== */
 
-yearElements.forEach((element) => {
+const nav = document.querySelector(".nav");
 
-    element.innerHTML = `© ${new Date().getFullYear()} NORTH`;
+window.addEventListener("scroll", () => {
+
+    if (!nav) return;
+
+    if (window.scrollY > 40) {
+
+        nav.style.background = "rgba(8,9,11,.92)";
+
+    } else {
+
+        nav.style.background = "rgba(8,9,11,.78)";
+
+    }
 
 });
