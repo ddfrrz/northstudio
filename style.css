@@ -1,22 +1,22 @@
 /* =========================================================
-   NORTH — DIGITAL SYSTEMS
-   ========================================================= */
+   NORTH — STYLE
+========================================================= */
 
 :root {
-    --black: #070809;
-    --black-soft: #0b0c0e;
-    --white: #f2f2ed;
-    --gray: #8d8f94;
-    --gray-dark: #242529;
-    --line: rgba(255,255,255,0.12);
-    --blue: #5748ff;
-
-    --font-title: "Space Grotesk", sans-serif;
-    --font-body: "DM Sans", sans-serif;
+    --black: #08090b;
+    --black-soft: #0d0e11;
+    --white: #f4f4f1;
+    --gray: #85888d;
+    --gray-dark: #36383d;
+    --line: rgba(255, 255, 255, 0.12);
+    --blue: #5548ff;
+    --blue-soft: rgba(85, 72, 255, 0.28);
 }
 
 
-/* RESET */
+/* =========================================================
+   RESET
+========================================================= */
 
 * {
     margin: 0;
@@ -31,7 +31,7 @@ html {
 body {
     background: var(--black);
     color: var(--white);
-    font-family: var(--font-body);
+    font-family: "DM Sans", sans-serif;
     overflow-x: hidden;
 }
 
@@ -40,32 +40,75 @@ a {
     text-decoration: none;
 }
 
-img {
-    max-width: 100%;
-    display: block;
+button {
+    font: inherit;
 }
 
-
-/* CURSOR */
-
-.cursor {
-    position: fixed;
-    width: 7px;
-    height: 7px;
+::selection {
     background: var(--white);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9999;
-    transform: translate(-50%, -50%);
-    mix-blend-mode: difference;
+    color: var(--black);
 }
 
 
 /* =========================================================
-   HEADER
-   ========================================================= */
+   SCROLLBAR
+========================================================= */
 
-.header {
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--black);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #292b30;
+}
+
+
+/* =========================================================
+   CURSOR
+========================================================= */
+
+.cursor,
+.cursor-ring {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+}
+
+.cursor {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: white;
+}
+
+.cursor-ring {
+    width: 30px;
+    height: 30px;
+    border: 1px solid rgba(255,255,255,.35);
+    border-radius: 50%;
+    transition:
+        width .2s ease,
+        height .2s ease,
+        border-color .2s ease;
+}
+
+body.cursor-hover .cursor-ring {
+    width: 48px;
+    height: 48px;
+    border-color: rgba(85,72,255,.7);
+}
+
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+.navbar {
     height: 92px;
     padding: 0 5vw;
 
@@ -76,221 +119,250 @@ img {
     border-bottom: 1px solid var(--line);
 
     position: relative;
-    z-index: 10;
+    z-index: 100;
+
+    background: rgba(8,9,11,.88);
+    backdrop-filter: blur(18px);
 }
 
 .logo {
-    font-family: var(--font-title);
-    font-size: 22px;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 21px;
     font-weight: 700;
     letter-spacing: -1px;
 }
 
-.logo span {
+.logo span,
+.footer-logo span,
+.philosophy-mark span {
     color: var(--blue);
 }
 
-.nav {
+.nav-links {
     display: flex;
-    gap: 42px;
+    gap: 38px;
     margin-left: auto;
-    margin-right: 50px;
+    margin-right: 55px;
 }
 
-.nav a {
+.nav-links a {
     font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    transition: color 0.2s ease;
+    font-weight: 600;
+    letter-spacing: .08em;
+    color: #c7c8c6;
+    transition: color .25s ease;
 }
 
-.nav a:hover {
-    color: var(--blue);
+.nav-links a:hover {
+    color: white;
 }
 
-.header-button {
-    border: 1px solid var(--line);
-    padding: 15px 20px;
+.nav-button {
+    border: 1px solid rgba(255,255,255,.18);
+    padding: 14px 20px;
 
     font-size: 10px;
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: .08em;
 
     transition:
-        background 0.25s ease,
-        color 0.25s ease;
+        background .25s ease,
+        border-color .25s ease;
 }
 
-.header-button:hover {
-    background: var(--white);
-    color: var(--black);
+.nav-button:hover {
+    background: white;
+    color: black;
+    border-color: white;
+}
+
+.menu-button {
+    display: none;
+}
+
+
+/* =========================================================
+   COMMON
+========================================================= */
+
+.section-label {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .12em;
+    color: #777a80;
 }
 
 
 /* =========================================================
    HERO
-   ========================================================= */
+========================================================= */
 
 .hero {
     min-height: calc(100vh - 92px);
-    padding: 30px 5vw 50px;
+    position: relative;
 
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    align-items: center;
+
+    padding: 100px 8vw;
+
+    overflow: hidden;
 }
 
-.hero-top {
-    display: flex;
-    justify-content: space-between;
+.hero-grid,
+.cta-grid {
+    position: absolute;
+    inset: 0;
 
-    color: var(--gray);
+    background-image:
+        linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
 
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
+    background-size: 80px 80px;
+
+    mask-image: linear-gradient(
+        to bottom,
+        black,
+        transparent 90%
+    );
+
+    pointer-events: none;
 }
 
 .hero-content {
-    margin-top: auto;
-    margin-bottom: 30px;
+    position: relative;
+    z-index: 2;
+
+    width: 100%;
+    max-width: 1300px;
+
+    margin: auto;
 }
 
-.hero-label {
-    color: var(--blue);
+.eyebrow {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .16em;
+    color: var(--gray);
 
-    font-size: 11px;
-    font-weight: 700;
-
-    letter-spacing: 0.12em;
-
-    margin-bottom: 30px;
+    margin-bottom: 40px;
 }
 
 .hero h1 {
-    font-family: var(--font-title);
+    font-family: "Space Grotesk", sans-serif;
 
-    font-size: clamp(65px, 11vw, 180px);
+    font-size: clamp(65px, 10vw, 160px);
 
-    line-height: 0.84;
-
-    letter-spacing: -0.075em;
-
-    font-weight: 600;
+    line-height: .86;
+    letter-spacing: -.075em;
+    font-weight: 700;
 
     max-width: 1200px;
 }
 
 .hero h1 span {
     color: transparent;
-
-    -webkit-text-stroke: 1px var(--white);
+    -webkit-text-stroke: 1px rgba(244,244,241,.5);
 }
 
 .hero-bottom {
     margin-top: 70px;
 
     display: flex;
-    justify-content: space-between;
     align-items: flex-end;
+    justify-content: space-between;
+
+    max-width: 800px;
 }
 
 .hero-bottom p {
-    max-width: 420px;
-
-    color: var(--gray);
-
-    font-size: 15px;
-    line-height: 1.6;
+    color: #92959a;
+    font-size: 14px;
+    line-height: 1.7;
+    max-width: 430px;
 }
 
 .hero-link {
     display: flex;
-    gap: 20px;
+    gap: 14px;
     align-items: center;
 
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 700;
-    letter-spacing: 0.1em;
+    letter-spacing: .1em;
+
+    border-bottom: 1px solid rgba(255,255,255,.3);
+    padding-bottom: 8px;
 }
 
 .hero-link span {
-    font-size: 20px;
     color: var(--blue);
+    font-size: 16px;
+}
+
+.hero-coordinate {
+    position: absolute;
+    right: 5vw;
+    bottom: 40px;
+
+    color: #505258;
+
+    font-size: 9px;
+    letter-spacing: .15em;
 }
 
 
 /* =========================================================
-   GERAL
-   ========================================================= */
+   STATEMENT
+========================================================= */
 
-.section-number {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    color: var(--gray);
-}
-
-
-/* =========================================================
-   MANIFESTO
-   ========================================================= */
-
-.manifesto {
-    padding: 180px 5vw;
+.statement {
+    padding: 180px 8vw;
 
     border-top: 1px solid var(--line);
 }
 
-.manifesto-content {
-    margin-top: 110px;
+.statement-content {
+    display: grid;
+    grid-template-columns: 1.4fr .6fr;
+
+    gap: 100px;
+
+    margin-top: 70px;
 }
 
-.eyebrow {
+.statement h2 {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(55px, 8vw, 120px);
+    line-height: .9;
+    letter-spacing: -.07em;
+}
+
+.statement h2 span {
     color: var(--blue);
-
-    font-size: 11px;
-    font-weight: 700;
-
-    letter-spacing: 0.12em;
 }
 
-.manifesto h2 {
-    font-family: var(--font-title);
-
-    font-size: clamp(45px, 7vw, 105px);
-
-    line-height: 0.95;
-
-    letter-spacing: -0.06em;
-
-    font-weight: 500;
-
-    margin-top: 28px;
+.statement-text {
+    padding-top: 15px;
 }
 
-.manifesto-text {
-    color: var(--gray);
-
-    max-width: 500px;
-
+.statement-text p {
     font-size: 16px;
-    line-height: 1.6;
+    line-height: 1.7;
+    color: #92959a;
 
-    margin-top: 60px;
-
-    margin-left: 35%;
+    margin-bottom: 25px;
 }
 
 
 /* =========================================================
    SYSTEMS
-   ========================================================= */
+========================================================= */
 
 .systems {
-    padding: 120px 5vw;
-
-    border-top: 1px solid var(--line);
+    padding: 120px 8vw;
 }
 
 .section-header {
@@ -298,336 +370,412 @@ img {
     justify-content: space-between;
     align-items: flex-start;
 
-    margin-bottom: 80px;
+    padding-bottom: 50px;
+
+    border-bottom: 1px solid var(--line);
 }
 
 .section-header > p {
-    color: var(--gray);
+    max-width: 300px;
 
-    font-size: 10px;
-    line-height: 1.5;
+    color: #777a80;
 
-    text-align: right;
-
-    letter-spacing: 0.08em;
+    font-size: 13px;
+    line-height: 1.6;
 }
 
-.systems-grid {
-    display: grid;
+.system-item {
+    min-height: 210px;
 
-    grid-template-columns: repeat(2, 1fr);
+    display: grid;
+    grid-template-columns: 80px 1fr 60px;
+    align-items: center;
+
+    border-bottom: 1px solid var(--line);
+
+    transition: padding .35s ease;
+}
+
+.system-item:hover {
+    padding-left: 15px;
+}
+
+.system-number {
+    color: #505258;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 11px;
+}
+
+.system-main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+}
+
+.system-main h3 {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(34px, 4vw, 65px);
+    line-height: .9;
+    letter-spacing: -.06em;
+}
+
+.system-main p {
+    max-width: 300px;
+
+    color: #7f8287;
+
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.system-arrow {
+    font-size: 26px;
+    color: var(--blue);
+
+    text-align: right;
+}
+
+
+/* =========================================================
+   WORK
+========================================================= */
+
+.work {
+    padding: 130px 8vw;
+}
+
+.work-placeholder {
+    min-height: 500px;
+
+    margin-top: 70px;
+
+    border: 1px solid var(--line);
+
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(85,72,255,.08),
+            transparent 35%
+        ),
+        #0b0c0f;
+
+    overflow: hidden;
+}
+
+.work-placeholder::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+
+    background-size: 60px 60px;
+}
+
+.placeholder-top,
+.placeholder-bottom {
+    position: absolute;
+
+    left: 25px;
+    right: 25px;
+
+    display: flex;
+    justify-content: space-between;
+
+    color: #55585e;
+
+    font-family: "Space Grotesk", sans-serif;
+
+    font-size: 9px;
+    letter-spacing: .12em;
+}
+
+.placeholder-top {
+    top: 25px;
+}
+
+.placeholder-bottom {
+    bottom: 25px;
+}
+
+.placeholder-center {
+    position: relative;
+
+    font-family: "Space Grotesk", sans-serif;
+
+    font-size: clamp(55px, 10vw, 140px);
+    font-weight: 700;
+
+    letter-spacing: -.08em;
+
+    color: #1b1d22;
+}
+
+
+/* =========================================================
+   PROCESS
+========================================================= */
+
+.process {
+    padding: 130px 8vw;
+    border-top: 1px solid var(--line);
+}
+
+.process-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+
+    margin-top: 70px;
 
     border-top: 1px solid var(--line);
     border-left: 1px solid var(--line);
 }
 
-.system-card {
-    min-height: 430px;
+.process-item {
+    min-height: 300px;
 
-    padding: 35px;
+    padding: 28px;
 
     border-right: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
 
     display: flex;
     flex-direction: column;
-
-    position: relative;
-
-    transition:
-        background 0.3s ease,
-        color 0.3s ease;
-}
-
-.system-card:hover {
-    background: var(--white);
-    color: var(--black);
-}
-
-.system-number {
-    color: var(--gray);
-
-    font-size: 11px;
-}
-
-.system-card h3 {
-    font-family: var(--font-title);
-
-    font-size: clamp(38px, 5vw, 70px);
-
-    line-height: 0.9;
-
-    letter-spacing: -0.06em;
-
-    font-weight: 600;
-
-    margin-top: auto;
-}
-
-.system-card p {
-    max-width: 360px;
-
-    color: var(--gray);
-
-    font-size: 14px;
-    line-height: 1.55;
-
-    margin-top: 35px;
-}
-
-.system-footer {
-    border-top: 1px solid var(--line);
-
-    margin-top: 45px;
-    padding-top: 15px;
-
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-}
-
-
-/* =========================================================
-   WORK
-   ========================================================= */
-
-.work {
-    padding: 160px 5vw;
-
-    border-top: 1px solid var(--line);
-}
-
-.work-main {
-    margin-top: 90px;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-}
-
-.work h2 {
-    font-family: var(--font-title);
-
-    font-size: clamp(60px, 10vw, 150px);
-
-    line-height: 0.85;
-
-    letter-spacing: -0.07em;
-
-    margin-top: 25px;
-}
-
-.work h2 span {
-    color: transparent;
-
-    -webkit-text-stroke: 1px var(--white);
-}
-
-.work-description {
-    max-width: 340px;
-
-    color: var(--gray);
-
-    font-size: 14px;
-    line-height: 1.6;
-}
-
-.work-line {
-    margin-top: 100px;
-
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
-
-    padding: 20px 0;
-
-    display: flex;
-    justify-content: space-between;
-
-    color: var(--gray);
-
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-}
-
-
-/* =========================================================
-   PROCESS
-   ========================================================= */
-
-.process {
-    padding: 130px 5vw;
-
-    border-top: 1px solid var(--line);
-}
-
-.process-list {
-    border-top: 1px solid var(--line);
-}
-
-.process-item {
-    min-height: 150px;
-
-    border-bottom: 1px solid var(--line);
-
-    display: grid;
-
-    grid-template-columns: 100px 1fr 1fr;
-
-    align-items: center;
-
-    transition: padding 0.25s ease;
-}
-
-.process-item:hover {
-    padding-left: 20px;
 }
 
 .process-item > span {
-    color: var(--blue);
-
-    font-size: 11px;
-    font-weight: 700;
+    color: #575a60;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 10px;
 }
 
 .process-item h3 {
-    font-family: var(--font-title);
+    margin-top: auto;
+    margin-bottom: 20px;
 
-    font-size: 32px;
+    font-family: "Space Grotesk", sans-serif;
 
-    letter-spacing: -0.04em;
+    font-size: 22px;
+    letter-spacing: -.04em;
 }
 
 .process-item p {
-    max-width: 400px;
+    color: #777a80;
 
-    color: var(--gray);
+    font-size: 12px;
+    line-height: 1.6;
 
-    font-size: 13px;
-    line-height: 1.5;
+    max-width: 180px;
 }
 
 
 /* =========================================================
    FOUNDER
-   ========================================================= */
+========================================================= */
 
 .founder {
-    padding: 130px 5vw 170px;
-
-    border-top: 1px solid var(--line);
-
     position: relative;
 
+    padding: 160px 8vw;
+
     overflow: hidden;
+
+    border-top: 1px solid var(--line);
 }
 
-.founder-top {
-    display: flex;
-    justify-content: space-between;
+.founder-bg-glow {
+    position: absolute;
 
-    color: var(--gray);
+    width: 700px;
+    height: 700px;
 
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
+    left: -250px;
+    top: 150px;
+
+    background: radial-gradient(
+        circle,
+        rgba(85,72,255,.12),
+        rgba(85,72,255,.035) 35%,
+        transparent 70%
+    );
+
+    filter: blur(25px);
+
+    pointer-events: none;
 }
 
+.founder-label {
+    position: relative;
+    z-index: 2;
 
-/* LAYOUT PRINCIPAL */
+    margin-bottom: 70px;
+}
 
 .founder-layout {
-    margin-top: 100px;
+    position: relative;
+    z-index: 2;
 
     display: grid;
 
-    grid-template-columns: 1.05fr 0.95fr;
+    grid-template-columns: minmax(400px, .9fr) 1.1fr;
 
-    min-height: 720px;
+    gap: 100px;
 
     align-items: center;
-
-    position: relative;
 }
 
 
 /* =========================================================
-   FOTO — AQUI ESTÁ A MUDANÇA
-   ========================================================= */
+   FOUNDER IMAGE
+========================================================= */
 
-.founder-image {
+.founder-visual {
     position: relative;
 
-    height: 720px;
+    min-height: 650px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.founder-image-wrapper {
+    position: relative;
+
+    width: 100%;
+    height: 650px;
 
     overflow: hidden;
 
-    /* tira completamente a aparência de card */
-    background: transparent;
+    background: #101115;
 }
 
 
-/* A imagem ocupa toda a área */
+/*
+    FOTO
 
-.founder-image img {
+    Aqui está a parte importante:
+
+    A imagem não recebe uma borda quadrada visual.
+    Ela ocupa toda a área e desaparece gradualmente
+    nas bordas através do fade.
+*/
+
+.founder-image {
     position: absolute;
+
+    inset: 0;
 
     width: 100%;
     height: 100%;
 
     object-fit: cover;
-
-    /*
-       Ajuste do enquadramento.
-       A foto original é vertical, então deixamos
-       ela um pouco mais afastada.
-    */
-
     object-position: center center;
+
+    display: block;
 
     filter:
         grayscale(100%)
-        contrast(1.05)
-        brightness(0.88);
+        contrast(1.08)
+        brightness(.82);
 
-    transform: scale(1.04);
+    opacity: .94;
+
+    /*
+       Fade nas laterais e embaixo.
+    */
+
+    -webkit-mask-image:
+        linear-gradient(
+            to right,
+            transparent 0%,
+            rgba(0,0,0,.7) 8%,
+            black 18%,
+            black 80%,
+            rgba(0,0,0,.7) 93%,
+            transparent 100%
+        ),
+        linear-gradient(
+            to bottom,
+            transparent 0%,
+            black 12%,
+            black 76%,
+            rgba(0,0,0,.5) 90%,
+            transparent 100%
+        );
+
+    -webkit-mask-composite: source-in;
+
+    mask-image:
+        linear-gradient(
+            to right,
+            transparent 0%,
+            rgba(0,0,0,.7) 8%,
+            black 18%,
+            black 80%,
+            rgba(0,0,0,.7) 93%,
+            transparent 100%
+        ),
+        linear-gradient(
+            to bottom,
+            transparent 0%,
+            black 12%,
+            black 76%,
+            rgba(0,0,0,.5) 90%,
+            transparent 100%
+        );
+
+    mask-composite: intersect;
 }
 
 
-/* ILUMINAÇÃO AZUL/ROXA */
+/*
+   Luz azul/roxa sobre a imagem.
+*/
 
-.image-glow {
+.founder-light {
     position: absolute;
 
     width: 500px;
     height: 500px;
 
-    left: 15%;
-    top: 10%;
+    left: -100px;
+    top: 50px;
+
+    border-radius: 50%;
 
     background:
         radial-gradient(
             circle,
-            rgba(87, 72, 255, 0.18) 0%,
-            rgba(87, 72, 255, 0.06) 35%,
+            rgba(85,72,255,.22),
+            rgba(85,72,255,.08) 35%,
             transparent 70%
         );
 
-    filter: blur(40px);
+    filter: blur(35px);
 
     z-index: 2;
 
     pointer-events: none;
+
+    mix-blend-mode: screen;
 }
 
 
 /*
-   FADE:
-   A imagem começa visível à esquerda
-   e desaparece suavemente no preto à direita.
+   Fade final para integrar com o fundo da NORTH.
 */
 
-.image-fade {
+.founder-fade {
     position: absolute;
 
     inset: 0;
@@ -638,600 +786,526 @@ img {
 
     background:
 
-        /* fade para o fundo na direita */
         linear-gradient(
-            90deg,
-            transparent 35%,
-            rgba(7,8,9,0.25) 55%,
-            rgba(7,8,9,0.82) 82%,
+            to right,
+            var(--black) 0%,
+            transparent 16%,
+            transparent 82%,
             var(--black) 100%
         ),
 
-        /* fade inferior */
         linear-gradient(
-            0deg,
+            to bottom,
             var(--black) 0%,
-            transparent 35%
-        ),
-
-        /* fade superior */
-        linear-gradient(
-            180deg,
-            rgba(7,8,9,0.15),
-            transparent 30%
+            transparent 16%,
+            transparent 70%,
+            var(--black) 100%
         );
 }
 
 
-/* linha sutil sobre a imagem */
+/*
+   Uma luz muito sutil atrás da pessoa.
+*/
 
-.founder-image::after {
+.founder-image-wrapper::after {
     content: "";
 
     position: absolute;
 
-    inset: 20px;
+    width: 420px;
+    height: 420px;
 
-    border: 1px solid rgba(255,255,255,0.08);
+    left: 50%;
+    top: 40%;
 
-    z-index: 4;
+    transform: translate(-50%, -50%);
+
+    border-radius: 50%;
+
+    background: radial-gradient(
+        circle,
+        rgba(255,255,255,.055),
+        transparent 68%
+    );
+
+    filter: blur(30px);
 
     pointer-events: none;
+
+    z-index: 4;
 }
 
 
-/* LABEL */
+/* TAG */
 
-.image-label {
+.founder-tag {
     position: absolute;
-
-    left: 35px;
-    bottom: 35px;
 
     z-index: 5;
 
+    left: 28px;
+    bottom: 30px;
+
+    border: 1px solid rgba(255,255,255,.22);
+
+    background: rgba(8,9,11,.5);
+
+    backdrop-filter: blur(12px);
+
     padding: 10px 13px;
 
-    border: 1px solid rgba(255,255,255,0.18);
-
-    background: rgba(7,8,9,0.45);
-
-    backdrop-filter: blur(10px);
+    font-family: "Space Grotesk", sans-serif;
 
     font-size: 9px;
-    font-weight: 700;
+    font-weight: 600;
+    letter-spacing: .1em;
 
-    letter-spacing: 0.1em;
+    color: #d7d8d5;
 }
 
 
 /* =========================================================
-   TEXTO FOUNDER
-   ========================================================= */
+   FOUNDER COPY
+========================================================= */
 
-.founder-content {
+.founder-copy {
     position: relative;
-
-    z-index: 6;
-
-    margin-left: -100px;
-
-    padding: 70px 0 70px 60px;
-
-    /*
-       leve vidro atrás do texto,
-       mas sem parecer um card.
-    */
-
-    background:
-        linear-gradient(
-            90deg,
-            rgba(7,8,9,0.45),
-            rgba(7,8,9,0.9) 25%,
-            var(--black)
-        );
 }
 
-.founder-content h2 {
-    font-family: var(--font-title);
+.founder-title h2 {
+    font-family: "Space Grotesk", sans-serif;
 
-    font-size: clamp(50px, 6vw, 90px);
+    font-size: clamp(48px, 6vw, 88px);
 
-    line-height: 0.88;
+    line-height: .88;
 
-    letter-spacing: -0.065em;
+    letter-spacing: -.075em;
 
-    font-weight: 600;
+    font-weight: 700;
+}
 
-    margin-top: 30px;
+.founder-info {
+    margin-top: 65px;
 }
 
 .founder-name {
-    margin-top: 60px;
-
-    padding-bottom: 20px;
-
-    border-bottom: 1px solid var(--line);
-
     display: flex;
-
     align-items: baseline;
-
-    gap: 15px;
+    gap: 18px;
 }
 
 .founder-name strong {
-    font-family: var(--font-title);
+    font-family: "Space Grotesk", sans-serif;
 
-    font-size: 19px;
+    font-size: 16px;
 }
 
 .founder-name span {
-    color: var(--gray);
-
     font-size: 9px;
-    font-weight: 700;
 
-    letter-spacing: 0.08em;
+    letter-spacing: .1em;
+
+    color: #777a80;
 }
 
-.founder-copy {
-    max-width: 580px;
+.founder-line {
+    height: 1px;
 
-    margin-top: 35px;
+    background: var(--line);
+
+    margin: 22px 0 30px;
 }
 
-.founder-copy p {
-    color: #b8b9bc;
+.founder-text {
+    max-width: 600px;
+}
+
+.founder-text p {
+    color: #92959a;
 
     font-size: 14px;
 
-    line-height: 1.7;
+    line-height: 1.75;
 
     margin-bottom: 22px;
 }
 
 .founder-signature {
-    border-top: 1px solid var(--line);
-
-    padding-top: 20px;
-
-    margin-top: 40px;
-
     display: flex;
+
     justify-content: space-between;
 
-    color: var(--gray);
+    align-items: center;
+
+    padding-top: 28px;
+
+    margin-top: 35px;
+
+    border-top: 1px solid var(--line);
+
+    font-family: "Space Grotesk", sans-serif;
 
     font-size: 9px;
 
-    font-weight: 700;
-
-    letter-spacing: 0.08em;
+    letter-spacing: .08em;
 }
 
 .founder-signature span:first-child {
     color: var(--white);
 }
 
+.founder-signature span:last-child {
+    color: #666970;
+}
+
 
 /* =========================================================
    PHILOSOPHY
-   ========================================================= */
+========================================================= */
 
 .philosophy {
-    padding: 150px 5vw 200px;
+    min-height: 80vh;
+
+    padding: 150px 8vw;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
     border-top: 1px solid var(--line);
+
+    text-align: center;
 }
 
-.philosophy-content {
-    margin-top: 100px;
-}
+.philosophy-mark {
+    font-family: "Space Grotesk", sans-serif;
 
-.philosophy-content p {
-    color: var(--gray);
+    font-size: 14px;
+    font-weight: 700;
 
-    font-size: clamp(20px, 3vw, 40px);
+    letter-spacing: -.04em;
 
-    line-height: 1;
-
-    letter-spacing: -0.04em;
+    margin-bottom: 70px;
 }
 
 .philosophy h2 {
-    font-family: var(--font-title);
+    font-family: "Space Grotesk", sans-serif;
 
     font-size: clamp(60px, 11vw, 170px);
 
-    line-height: 0.85;
+    line-height: .82;
 
-    letter-spacing: -0.075em;
-
-    margin-top: 25px;
+    letter-spacing: -.08em;
 }
 
-.philosophy h2 span {
-    color: transparent;
+.philosophy p {
+    margin-top: 55px;
 
-    -webkit-text-stroke: 1px var(--white);
+    color: #686b70;
+
+    font-size: 11px;
+
+    letter-spacing: .12em;
 }
 
 
 /* =========================================================
-   CONTACT
-   ========================================================= */
+   CTA
+========================================================= */
 
-.contact {
-    padding: 40px 5vw 120px;
+.cta {
+    min-height: 80vh;
+
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    padding: 130px 8vw;
 
     border-top: 1px solid var(--line);
+
+    overflow: hidden;
 }
 
-.contact-top {
-    display: flex;
-    justify-content: space-between;
-
-    color: var(--gray);
-
-    font-size: 10px;
-
-    font-weight: 700;
-
-    letter-spacing: 0.08em;
+.cta-content {
+    position: relative;
+    z-index: 2;
 }
 
-.contact-content {
-    margin-top: 120px;
+.cta h2 {
+    font-family: "Space Grotesk", sans-serif;
+
+    font-size: clamp(55px, 8vw, 125px);
+
+    line-height: .86;
+
+    letter-spacing: -.075em;
+
+    margin-top: 60px;
 }
 
-.contact h2 {
-    font-family: var(--font-title);
-
-    font-size: clamp(60px, 10vw, 150px);
-
-    line-height: 0.85;
-
-    letter-spacing: -0.07em;
+.cta h2 span {
+    color: var(--blue);
 }
 
-.contact h2 span {
-    color: transparent;
+.cta p {
+    color: #81848a;
 
-    -webkit-text-stroke: 1px var(--white);
+    max-width: 400px;
+
+    font-size: 14px;
+
+    line-height: 1.7;
+
+    margin-top: 45px;
 }
 
-.contact-content p {
-    color: var(--gray);
-
-    max-width: 430px;
-
-    font-size: 15px;
-
-    line-height: 1.6;
-
-    margin-top: 55px;
-}
-
-.contact-button {
+.cta-button {
     display: inline-flex;
 
     align-items: center;
-
-    gap: 35px;
+    gap: 30px;
 
     margin-top: 45px;
 
-    padding: 18px 24px;
+    padding: 17px 22px;
 
-    background: var(--white);
+    border: 1px solid rgba(255,255,255,.2);
 
-    color: var(--black);
+    font-family: "Space Grotesk", sans-serif;
 
     font-size: 10px;
 
     font-weight: 700;
 
-    letter-spacing: 0.08em;
+    letter-spacing: .08em;
 
     transition:
-        background 0.25s ease,
-        color 0.25s ease;
+        background .25s ease,
+        color .25s ease,
+        border-color .25s ease;
 }
 
-.contact-button:hover {
-    background: var(--blue);
+.cta-button span {
+    color: var(--blue);
 
-    color: white;
+    font-size: 17px;
 }
 
-.contact-button span {
-    font-size: 18px;
+.cta-button:hover {
+    background: white;
+    color: black;
+    border-color: white;
 }
 
 
 /* =========================================================
    FOOTER
-   ========================================================= */
+========================================================= */
 
 .footer {
-    padding: 40px 5vw 25px;
+    padding: 50px 5vw 30px;
 
     border-top: 1px solid var(--line);
+}
 
-    display: grid;
-
-    grid-template-columns: 1fr 1fr 1fr;
+.footer-top {
+    display: flex;
 
     align-items: center;
 
-    gap: 20px;
+    justify-content: space-between;
+
+    padding-bottom: 70px;
 }
 
 .footer-logo {
-    font-family: var(--font-title);
+    font-family: "Space Grotesk", sans-serif;
 
-    font-size: 22px;
-
-    font-weight: 700;
-
-    letter-spacing: -1px;
-}
-
-.footer-logo span {
-    color: var(--blue);
-}
-
-.footer-middle,
-.footer > a {
-    font-size: 9px;
+    font-size: 28px;
 
     font-weight: 700;
 
-    letter-spacing: 0.08em;
-
-    color: var(--gray);
+    letter-spacing: -.06em;
 }
 
-.footer > a {
-    text-align: right;
+.footer-motto {
+    font-size: 10px;
+
+    color: #666970;
+
+    letter-spacing: .12em;
 }
 
 .footer-bottom {
-    grid-column: 1 / -1;
+    padding-top: 25px;
 
     border-top: 1px solid var(--line);
-
-    padding-top: 20px;
-
-    margin-top: 20px;
 
     display: flex;
 
     justify-content: space-between;
 
-    color: var(--gray);
+    color: #55585e;
 
-    font-size: 8px;
+    font-size: 9px;
 
-    letter-spacing: 0.08em;
+    letter-spacing: .08em;
+}
+
+.footer-bottom a:hover {
+    color: white;
 }
 
 
 /* =========================================================
-   RESPONSIVO
-   ========================================================= */
+   RESPONSIVE — TABLET
+========================================================= */
 
 @media (max-width: 900px) {
 
-    .header {
-        height: 75px;
-
-        padding: 0 6vw;
+    .nav-links {
+        gap: 20px;
+        margin-right: 20px;
     }
 
-    .nav {
+    .nav-button {
         display: none;
     }
 
-    .header-button {
-        padding: 12px 14px;
-
-        font-size: 8px;
+    .statement-content {
+        grid-template-columns: 1fr;
+        gap: 50px;
     }
 
+    .system-main {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .process-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .founder-layout {
+        grid-template-columns: 1fr;
+
+        gap: 70px;
+    }
+
+    .founder-visual {
+        min-height: 600px;
+    }
+
+    .founder-image-wrapper {
+        height: 600px;
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+
+    .navbar {
+        height: 75px;
+
+        padding: 0 22px;
+    }
+
+    .logo {
+        font-size: 19px;
+    }
+
+    .nav-links,
+    .nav-button {
+        display: none;
+    }
+
+    .menu-button {
+        display: flex;
+
+        width: 35px;
+        height: 35px;
+
+        border: 1px solid rgba(255,255,255,.15);
+
+        background: transparent;
+
+        flex-direction: column;
+
+        justify-content: center;
+
+        gap: 6px;
+
+        align-items: center;
+    }
+
+    .menu-button span {
+        width: 15px;
+        height: 1px;
+
+        background: white;
+    }
 
     .hero {
-        min-height: 85vh;
+        min-height: calc(100vh - 75px);
 
-        padding: 25px 6vw 45px;
+        padding: 70px 22px;
     }
 
     .hero h1 {
-        font-size: clamp(58px, 14vw, 110px);
+        font-size: clamp(55px, 16vw, 90px);
     }
 
     .hero-bottom {
-        margin-top: 50px;
-
         flex-direction: column;
 
         align-items: flex-start;
 
-        gap: 35px;
+        gap: 40px;
+
+        margin-top: 50px;
     }
 
+    .hero-coordinate {
+        right: 22px;
+        bottom: 25px;
+    }
 
-    .manifesto,
+    .statement,
     .systems,
     .work,
     .process,
     .founder,
-    .philosophy {
-        padding-left: 6vw;
-        padding-right: 6vw;
+    .cta {
+        padding-left: 22px;
+        padding-right: 22px;
     }
 
-
-    .manifesto {
-        padding-top: 120px;
-        padding-bottom: 120px;
+    .statement {
+        padding-top: 110px;
+        padding-bottom: 110px;
     }
 
-    .manifesto-content {
-        margin-top: 70px;
+    .statement-content {
+        margin-top: 45px;
     }
 
-    .manifesto h2 {
-        font-size: clamp(42px, 9vw, 80px);
+    .statement h2 {
+        font-size: 55px;
     }
 
-    .manifesto-text {
-        margin-left: 0;
-
-        margin-top: 40px;
-    }
-
-
-    .systems-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .system-card {
-        min-height: 380px;
-    }
-
-
-    .work-main {
-        flex-direction: column;
-
-        align-items: flex-start;
-
-        gap: 50px;
-    }
-
-
-    .process-item {
-        grid-template-columns: 60px 1fr;
-
-        padding: 25px 0;
-
-        min-height: 140px;
-    }
-
-    .process-item p {
-        margin-top: 10px;
-    }
-
-
-    /* FOUNDER MOBILE */
-
-    .founder-layout {
-        display: block;
-
-        min-height: auto;
-
-        margin-top: 70px;
-    }
-
-    .founder-image {
-        height: 650px;
-
-        width: 100%;
-    }
-
-    .founder-content {
-        margin-left: 0;
-
-        margin-top: -180px;
-
-        padding:
-            80px
-            30px
-            40px;
-
-        background:
-            linear-gradient(
-                180deg,
-                transparent 0%,
-                rgba(7,8,9,0.88) 25%,
-                var(--black) 55%
-            );
-    }
-
-    .founder-content h2 {
-        font-size: clamp(48px, 12vw, 85px);
-    }
-
-    .founder-copy {
-        max-width: none;
-    }
-
-    .founder-signature {
-        flex-direction: column;
-
-        gap: 12px;
-    }
-
-
-    .philosophy {
-        padding-top: 120px;
-
-        padding-bottom: 150px;
-    }
-
-
-    .contact {
-        padding-left: 6vw;
-        padding-right: 6vw;
-    }
-
-    .contact-content {
-        margin-top: 80px;
-    }
-
-
-    .footer {
-        grid-template-columns: 1fr 1fr;
-
-        padding-left: 6vw;
-        padding-right: 6vw;
-    }
-
-    .footer-middle {
-        text-align: right;
-    }
-
-    .footer > a {
-        grid-column: 1 / -1;
-
-        text-align: left;
-
-        margin-top: 15px;
-    }
-}
-
-
-/* =========================================================
-   MOBILE PEQUENO
-   ========================================================= */
-
-@media (max-width: 550px) {
-
-    .cursor {
-        display: none;
-    }
-
-    .header-button {
-        display: none;
-    }
-
-    .hero h1 {
-        font-size: 58px;
-    }
-
-    .hero-label {
-        margin-bottom: 20px;
+    .systems,
+    .work,
+    .process {
+        padding-top: 100px;
+        padding-bottom: 100px;
     }
 
     .section-header {
@@ -1240,93 +1314,142 @@ img {
         gap: 25px;
     }
 
-    .section-header > p {
-        text-align: left;
+    .system-item {
+        grid-template-columns: 40px 1fr 25px;
+
+        min-height: 230px;
     }
 
-    .system-card {
-        min-height: 340px;
-
-        padding: 25px;
+    .system-main h3 {
+        font-size: 38px;
     }
 
-    .system-card h3 {
-        font-size: 42px;
+    .system-main p {
+        font-size: 12px;
     }
 
-    .work h2 {
-        font-size: 65px;
+    .system-arrow {
+        font-size: 18px;
     }
 
-    .process-item {
-        grid-template-columns: 45px 1fr;
-    }
-
-    .process-item h3 {
-        font-size: 25px;
-    }
-
-    .founder-image {
-        height: 570px;
-    }
-
-    .founder-image::after {
-        inset: 12px;
-    }
-
-    .image-label {
-        left: 25px;
-        bottom: 25px;
-    }
-
-    .founder-content {
-        margin-top: -150px;
-
-        padding-left: 20px;
-        padding-right: 20px;
-    }
-
-    .founder-content h2 {
-        font-size: 47px;
-    }
-
-    .founder-name {
+    .work-placeholder {
+        min-height: 380px;
         margin-top: 45px;
     }
 
-    .founder-copy p {
+    .process-grid {
+        grid-template-columns: 1fr;
+        margin-top: 45px;
+    }
+
+    .process-item {
+        min-height: 230px;
+    }
+
+    /* FOUNDER */
+
+    .founder {
+        padding-top: 100px;
+        padding-bottom: 100px;
+    }
+
+    .founder-label {
+        margin-bottom: 40px;
+    }
+
+    .founder-layout {
+        gap: 50px;
+    }
+
+    .founder-visual {
+        min-height: 470px;
+    }
+
+    .founder-image-wrapper {
+        height: 470px;
+    }
+
+    .founder-image {
+        object-position: center top;
+    }
+
+    .founder-light {
+        width: 350px;
+        height: 350px;
+
+        left: -100px;
+        top: 80px;
+    }
+
+    .founder-title h2 {
+        font-size: 50px;
+    }
+
+    .founder-info {
+        margin-top: 45px;
+    }
+
+    .founder-name {
+        gap: 10px;
+    }
+
+    .founder-text p {
         font-size: 13px;
+    }
+
+    .founder-signature {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 15px;
+    }
+
+    .philosophy {
+        min-height: 65vh;
+
+        padding: 100px 22px;
     }
 
     .philosophy h2 {
         font-size: 62px;
     }
 
-    .contact h2 {
-        font-size: 62px;
+    .cta {
+        min-height: 70vh;
+
+        padding-top: 100px;
+        padding-bottom: 100px;
+    }
+
+    .cta h2 {
+        font-size: 58px;
     }
 
     .footer {
-        display: flex;
+        padding-left: 22px;
+        padding-right: 22px;
+    }
 
+    .footer-top {
         flex-direction: column;
 
         align-items: flex-start;
-    }
 
-    .footer-middle {
-        text-align: left;
-    }
+        gap: 25px;
 
-    .footer > a {
-        margin-top: 5px;
+        padding-bottom: 45px;
     }
 
     .footer-bottom {
-        width: 100%;
-
         flex-direction: column;
 
-        gap: 10px;
+        gap: 15px;
     }
+
+    .cursor,
+    .cursor-ring {
+        display: none;
+    }
+
 }
