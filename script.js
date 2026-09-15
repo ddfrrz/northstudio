@@ -1,92 +1,229 @@
-/* =====================================================
-   NORTH — SCRIPT
-===================================================== */
+// ==============================
+// NORTH — INTERAÇÕES
+// ==============================
 
 
-/* =====================================================
-   CURSOR
-===================================================== */
 
-const cursor = document.querySelector(".cursor");
+// HEADER AO ROLAR
 
-if (cursor) {
-
-    document.addEventListener("mousemove", (event) => {
-
-        cursor.style.left = event.clientX + "px";
-        cursor.style.top = event.clientY + "px";
-
-    });
+const header = document.querySelector(".header");
 
 
-    const interactiveElements = document.querySelectorAll(
-        "a, button, .system-item, .process-card"
+window.addEventListener("scroll", () => {
+
+    if (window.scrollY > 50) {
+
+        header.classList.add("scrolled");
+
+    } else {
+
+        header.classList.remove("scrolled");
+
+    }
+
+});
+
+
+
+// ==============================
+// CURSOR
+// ==============================
+
+const cursor =
+    document.querySelector(".cursor");
+
+
+if (
+    cursor &&
+    window.innerWidth > 800
+) {
+
+    document.addEventListener(
+        "mousemove",
+        (event) => {
+
+            cursor.style.left =
+                `${event.clientX}px`;
+
+            cursor.style.top =
+                `${event.clientY}px`;
+
+        }
     );
 
 
-    interactiveElements.forEach((element) => {
-
-        element.addEventListener("mouseenter", () => {
-
-            cursor.style.width = "13px";
-            cursor.style.height = "13px";
-
-        });
+    const interactiveElements =
+        document.querySelectorAll(
+            "a, button, .system, .work-card, .founder-photo-card"
+        );
 
 
-        element.addEventListener("mouseleave", () => {
+    interactiveElements.forEach(
+        (element) => {
 
-            cursor.style.width = "7px";
-            cursor.style.height = "7px";
+            element.addEventListener(
+                "mouseenter",
+                () => {
 
-        });
+                    cursor.classList.add(
+                        "active"
+                    );
 
-    });
-
-}
-
-
-
-/* =====================================================
-   MOBILE MENU
-===================================================== */
-
-const menuButton = document.querySelector(".menu-button");
-const nav = document.querySelector(".nav");
-
-if (menuButton && nav) {
-
-    menuButton.addEventListener("click", () => {
-
-        nav.classList.toggle("mobile-open");
-
-        menuButton.classList.toggle("active");
-
-    });
+                }
+            );
 
 
-    nav.querySelectorAll("a").forEach((link) => {
+            element.addEventListener(
+                "mouseleave",
+                () => {
 
-        link.addEventListener("click", () => {
+                    cursor.classList.remove(
+                        "active"
+                    );
 
-            nav.classList.remove("mobile-open");
+                }
+            );
 
-            menuButton.classList.remove("active");
-
-        });
-
-    });
+        }
+    );
 
 }
 
 
 
-/* =====================================================
-   FADE SUAVE AO ENTRAR NA PÁGINA
-===================================================== */
+// ==============================
+// MENU MOBILE
+// ==============================
 
-document.addEventListener("DOMContentLoaded", () => {
+const menuButton =
+    document.querySelector(
+        ".menu-button"
+    );
 
-    document.body.classList.add("loaded");
 
-});
+const nav =
+    document.querySelector(".nav");
+
+
+if (
+    menuButton &&
+    nav
+) {
+
+    menuButton.addEventListener(
+        "click",
+        () => {
+
+            nav.classList.toggle(
+                "mobile-open"
+            );
+
+        }
+    );
+
+}
+
+
+
+// ==============================
+// FECHAR MENU
+// ==============================
+
+document
+    .querySelectorAll(".nav a")
+    .forEach((link) => {
+
+        link.addEventListener(
+            "click",
+            () => {
+
+                if (nav) {
+
+                    nav.classList.remove(
+                        "mobile-open"
+                    );
+
+                }
+
+            }
+        );
+
+    });
+
+
+
+// ==============================
+// REVEAL AO ENTRAR NA TELA
+// ==============================
+
+const observer =
+    new IntersectionObserver(
+
+        (entries) => {
+
+            entries.forEach(
+                (entry) => {
+
+                    if (
+                        entry.isIntersecting
+                    ) {
+
+                        entry.target.classList.add(
+                            "visible"
+                        );
+
+                    }
+
+                }
+            );
+
+        },
+
+        {
+            threshold: 0.12
+        }
+
+    );
+
+
+
+document
+    .querySelectorAll(
+        `
+        .statement-content,
+        .system,
+        .work-card,
+        .process-grid article,
+        .about-content,
+        .founder-layout,
+        .contact-content
+        `
+    )
+    .forEach(
+        (element) => {
+
+            observer.observe(element);
+
+        }
+    );
+
+
+
+// ==============================
+// ANO AUTOMÁTICO
+// ==============================
+
+const yearElements =
+    document.querySelectorAll(
+        ".footer-bottom span:first-child"
+    );
+
+
+yearElements.forEach(
+    (element) => {
+
+        element.innerHTML =
+            `© ${new Date().getFullYear()} NORTH`;
+
+    }
+);
