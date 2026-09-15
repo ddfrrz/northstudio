@@ -1,54 +1,54 @@
-// ==============================
-// NORTH — INTERAÇÕES
-// ==============================
+/* =========================================================
+   NORTH — JAVASCRIPT
+========================================================= */
 
 
-// HEADER AO ROLAR
-
-const header = document.querySelector(".header");
-
-window.addEventListener("scroll", () => {
-    if (window.scrollY > 50) {
-        header.classList.add("scrolled");
-    } else {
-        header.classList.remove("scrolled");
-    }
-});
-
-
-// CURSOR
+/* =========================================================
+   CUSTOM CURSOR
+========================================================= */
 
 const cursor = document.querySelector(".cursor");
+const cursorRing = document.querySelector(".cursor-ring");
 
-if (cursor && window.innerWidth > 800) {
+if (cursor && cursorRing) {
 
     document.addEventListener("mousemove", (event) => {
+
         cursor.style.left = `${event.clientX}px`;
         cursor.style.top = `${event.clientY}px`;
+
+        cursorRing.style.left = `${event.clientX}px`;
+        cursorRing.style.top = `${event.clientY}px`;
+
     });
 
+
     const interactiveElements = document.querySelectorAll(
-        "a, button, .system, .work-card"
+        "a, button, .system-item, .process-item"
     );
+
 
     interactiveElements.forEach((element) => {
 
         element.addEventListener("mouseenter", () => {
-            cursor.classList.add("active");
+            document.body.classList.add("cursor-hover");
         });
 
         element.addEventListener("mouseleave", () => {
-            cursor.classList.remove("active");
+            document.body.classList.remove("cursor-hover");
         });
 
     });
+
 }
 
 
-// MENU MOBILE
+/* =========================================================
+   MOBILE MENU
+========================================================= */
 
 const menuButton = document.querySelector(".menu-button");
-const nav = document.querySelector(".nav");
+const nav = document.querySelector(".nav-links");
 
 if (menuButton && nav) {
 
@@ -56,65 +56,48 @@ if (menuButton && nav) {
 
         nav.classList.toggle("mobile-open");
 
+        menuButton.classList.toggle("active");
+
     });
 
 }
 
 
-// FECHAR MENU AO CLICAR
+/* =========================================================
+   FECHAR MENU AO CLICAR
+========================================================= */
 
-document.querySelectorAll(".nav a").forEach((link) => {
+const navLinks = document.querySelectorAll(".nav-links a");
+
+navLinks.forEach((link) => {
 
     link.addEventListener("click", () => {
 
         nav.classList.remove("mobile-open");
 
+        if (menuButton) {
+            menuButton.classList.remove("active");
+        }
+
     });
 
 });
 
 
-// REVEAL AO ENTRAR NA TELA
+/* =========================================================
+   IMAGE FALLBACK
+========================================================= */
 
-const observer = new IntersectionObserver(
-    (entries) => {
+const founderImage = document.querySelector(".founder-image");
 
-        entries.forEach((entry) => {
+if (founderImage) {
 
-            if (entry.isIntersecting) {
+    founderImage.addEventListener("error", () => {
 
-                entry.target.classList.add("visible");
-
-            }
-
-        });
-
-    },
-    {
-        threshold: 0.12
-    }
-);
-
-
-document
-    .querySelectorAll(
-        ".statement-content, .system, .work-card, .process-grid article, .about-content, .contact-content"
-    )
-    .forEach((element) => {
-
-        observer.observe(element);
+        console.warn(
+            "A imagem Eduardo não foi encontrada. Verifique se o arquivo se chama exatamente: eduardo.jpg.jpeg"
+        );
 
     });
 
-
-// ANO AUTOMÁTICO
-
-const yearElements = document.querySelectorAll(
-    ".footer-bottom span:first-child"
-);
-
-yearElements.forEach((element) => {
-
-    element.innerHTML = `© ${new Date().getFullYear()} NORTH`;
-
-});
+}
