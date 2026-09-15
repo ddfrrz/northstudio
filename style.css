@@ -1911,3 +1911,75 @@ section {
     }
 
 }
+/* =========================================
+   MOBILE FIXES
+   ========================================= */
+
+@media (max-width: 768px) {
+
+    /* Evita qualquer elemento horizontalmente cortado */
+    html,
+    body {
+        overflow-x: hidden;
+        max-width: 100%;
+    }
+
+
+    /* HERO */
+
+    .hero {
+        overflow: hidden;
+    }
+
+
+    .hero-content {
+        width: 100%;
+        max-width: 100%;
+    }
+
+
+    .hero h1 {
+        font-size: clamp(4.2rem, 16vw, 7rem);
+        line-height: 0.88;
+        letter-spacing: -0.065em;
+        max-width: 100%;
+        overflow-wrap: normal;
+        word-break: normal;
+    }
+
+
+    .hero h1 span {
+        display: block;
+    }
+
+
+    /* Texto inferior do hero */
+
+    .hero-bottom {
+        width: 100%;
+        max-width: 100%;
+    }
+
+
+    .hero-bottom p {
+        max-width: 100%;
+    }
+
+
+    /* Setas */
+
+    .hero-link span,
+    .system-arrow,
+    .contact-button span {
+        font-family: "DM Sans", sans-serif;
+        font-variant-emoji: text;
+    }
+
+
+    /* Índice */
+
+    .hero-index {
+        right: 24px;
+    }
+
+}
