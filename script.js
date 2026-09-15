@@ -1,51 +1,26 @@
-// ==============================
-// NORTH — INTERAÇÕES
-// ==============================
+/* =====================================================
+   NORTH — SCRIPT
+===================================================== */
 
 
-// HEADER AO ROLAR
-
-const header = document.querySelector(".header");
-
-if (header) {
-
-    window.addEventListener("scroll", () => {
-
-        if (window.scrollY > 50) {
-
-            header.classList.add("scrolled");
-
-        } else {
-
-            header.classList.remove("scrolled");
-
-        }
-
-    });
-
-}
-
-
-
-// ==============================
-// CURSOR
-// ==============================
+/* =====================================================
+   CURSOR
+===================================================== */
 
 const cursor = document.querySelector(".cursor");
 
-if (cursor && window.innerWidth > 800) {
+if (cursor) {
 
     document.addEventListener("mousemove", (event) => {
 
-        cursor.style.left = `${event.clientX}px`;
-
-        cursor.style.top = `${event.clientY}px`;
+        cursor.style.left = event.clientX + "px";
+        cursor.style.top = event.clientY + "px";
 
     });
 
 
     const interactiveElements = document.querySelectorAll(
-        "a, button, .system, .work-card, .founder-card"
+        "a, button, .system-item, .process-card"
     );
 
 
@@ -53,14 +28,16 @@ if (cursor && window.innerWidth > 800) {
 
         element.addEventListener("mouseenter", () => {
 
-            cursor.classList.add("active");
+            cursor.style.width = "13px";
+            cursor.style.height = "13px";
 
         });
 
 
         element.addEventListener("mouseleave", () => {
 
-            cursor.classList.remove("active");
+            cursor.style.width = "7px";
+            cursor.style.height = "7px";
 
         });
 
@@ -70,14 +47,12 @@ if (cursor && window.innerWidth > 800) {
 
 
 
-// ==============================
-// MENU MOBILE
-// ==============================
+/* =====================================================
+   MOBILE MENU
+===================================================== */
 
 const menuButton = document.querySelector(".menu-button");
-
 const nav = document.querySelector(".nav");
-
 
 if (menuButton && nav) {
 
@@ -85,86 +60,33 @@ if (menuButton && nav) {
 
         nav.classList.toggle("mobile-open");
 
+        menuButton.classList.toggle("active");
+
+    });
+
+
+    nav.querySelectorAll("a").forEach((link) => {
+
+        link.addEventListener("click", () => {
+
+            nav.classList.remove("mobile-open");
+
+            menuButton.classList.remove("active");
+
+        });
+
     });
 
 }
 
 
 
-// ==============================
-// FECHAR MENU
-// ==============================
+/* =====================================================
+   FADE SUAVE AO ENTRAR NA PÁGINA
+===================================================== */
 
-document.querySelectorAll(".nav a").forEach((link) => {
+document.addEventListener("DOMContentLoaded", () => {
 
-    link.addEventListener("click", () => {
-
-        if (nav) {
-
-            nav.classList.remove("mobile-open");
-
-        }
-
-    });
-
-});
-
-
-
-// ==============================
-// REVEAL AO ENTRAR NA TELA
-// ==============================
-
-const observer = new IntersectionObserver(
-
-    (entries) => {
-
-        entries.forEach((entry) => {
-
-            if (entry.isIntersecting) {
-
-                entry.target.classList.add("visible");
-
-                observer.unobserve(entry.target);
-
-            }
-
-        });
-
-    },
-
-    {
-        threshold: 0.12
-    }
-
-);
-
-
-
-document
-    .querySelectorAll(
-        ".statement-content, .system, .work-card, .process-grid article, .about-content, .founder-content, .contact-content"
-    )
-    .forEach((element) => {
-
-        observer.observe(element);
-
-    });
-
-
-
-// ==============================
-// ANO AUTOMÁTICO
-// ==============================
-
-const yearElements = document.querySelectorAll(
-    ".footer-bottom span:first-child"
-);
-
-
-yearElements.forEach((element) => {
-
-    element.innerHTML =
-        `© ${new Date().getFullYear()} NORTH`;
+    document.body.classList.add("loaded");
 
 });
