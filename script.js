@@ -1,100 +1,90 @@
-/* =========================================
-   NORTH — INTERAÇÕES
-========================================= */
+document.addEventListener("DOMContentLoaded", () => {
 
+    /* =========================
+       CUSTOM CURSOR
+    ========================= */
 
-/* CURSOR */
+    const cursor = document.querySelector(".cursor");
 
-const cursor = document.querySelector(".cursor");
+    if (cursor && window.innerWidth > 900) {
 
-if (cursor) {
+        document.addEventListener("mousemove", (event) => {
 
-  document.addEventListener("mousemove", (e) => {
+            cursor.style.left = `${event.clientX}px`;
+            cursor.style.top = `${event.clientY}px`;
 
-    cursor.style.left = e.clientX + "px";
-    cursor.style.top = e.clientY + "px";
+        });
 
-  });
-
-}
-
-
-/* MENU MOBILE */
-
-const menuButton = document.querySelector(".menu-button");
-const nav = document.querySelector(".nav-links");
-
-if (menuButton && nav) {
-
-  menuButton.addEventListener("click", () => {
-
-    nav.classList.toggle("mobile-open");
-
-  });
-
-}
-
-
-/* FECHAR MENU AO CLICAR */
-
-document.querySelectorAll(".nav-links a").forEach(link => {
-
-  link.addEventListener("click", () => {
-
-    if (nav) {
-      nav.classList.remove("mobile-open");
     }
 
-  });
 
-});
+    /* =========================
+       SMOOTH LINKS
+    ========================= */
 
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
 
-/* SCROLL SUAVE */
+        link.addEventListener("click", (event) => {
 
-document.querySelectorAll('a[href^="#"]').forEach(link => {
+            const targetId = link.getAttribute("href");
 
-  link.addEventListener("click", function (e) {
+            if (targetId === "#") return;
 
-    const target = document.querySelector(this.getAttribute("href"));
+            const target = document.querySelector(targetId);
 
-    if (!target) return;
+            if (!target) return;
 
-    e.preventDefault();
+            event.preventDefault();
 
-    target.scrollIntoView({
-      behavior: "smooth",
-      block: "start"
+            target.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+
+        });
+
     });
 
-  });
 
-});
+    /* =========================
+       IMAGE FALLBACK
+    ========================= */
 
+    const founderImage = document.querySelector(".image-card img");
 
-/* PEQUENO EFEITO DE HOVER NOS SISTEMAS */
+    if (founderImage) {
 
-document.querySelectorAll(".system-item").forEach(item => {
+        founderImage.addEventListener("error", () => {
 
-  item.addEventListener("mouseenter", () => {
+            console.warn(
+                "Não foi possível carregar eduardo.jpg.jpeg. " +
+                "Verifique se o arquivo está na mesma pasta do index.html."
+            );
 
-    const arrow = item.querySelector(".system-arrow");
+        });
 
-    if (arrow) {
-      arrow.style.color = "#5548ff";
     }
 
-  });
 
+    /* =========================
+       MENU MOBILE
+    ========================= */
 
-  item.addEventListener("mouseleave", () => {
+    const menuButton = document.querySelector(".menu-button");
+    const nav = document.querySelector(".nav");
 
-    const arrow = item.querySelector(".system-arrow");
+    if (menuButton && nav) {
 
-    if (arrow) {
-      arrow.style.color = "";
+        let menuOpen = false;
+
+        menuButton.addEventListener("click", () => {
+
+            menuOpen = !menuOpen;
+
+            nav.classList.toggle("menu-open", menuOpen);
+
+        });
+
     }
-
-  });
 
 });
