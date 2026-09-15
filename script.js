@@ -1,90 +1,120 @@
-document.addEventListener("DOMContentLoaded", () => {
+// ==============================
+// NORTH — INTERAÇÕES
+// ==============================
 
-    /* =========================
-       CUSTOM CURSOR
-    ========================= */
 
-    const cursor = document.querySelector(".cursor");
+// HEADER AO ROLAR
 
-    if (cursor && window.innerWidth > 900) {
+const header = document.querySelector(".header");
 
-        document.addEventListener("mousemove", (event) => {
-
-            cursor.style.left = `${event.clientX}px`;
-            cursor.style.top = `${event.clientY}px`;
-
-        });
-
+window.addEventListener("scroll", () => {
+    if (window.scrollY > 50) {
+        header.classList.add("scrolled");
+    } else {
+        header.classList.remove("scrolled");
     }
+});
 
 
-    /* =========================
-       SMOOTH LINKS
-    ========================= */
+// CURSOR
 
-    document.querySelectorAll('a[href^="#"]').forEach(link => {
+const cursor = document.querySelector(".cursor");
 
-        link.addEventListener("click", (event) => {
+if (cursor && window.innerWidth > 800) {
 
-            const targetId = link.getAttribute("href");
+    document.addEventListener("mousemove", (event) => {
+        cursor.style.left = `${event.clientX}px`;
+        cursor.style.top = `${event.clientY}px`;
+    });
 
-            if (targetId === "#") return;
+    const interactiveElements = document.querySelectorAll(
+        "a, button, .system, .work-card"
+    );
 
-            const target = document.querySelector(targetId);
+    interactiveElements.forEach((element) => {
 
-            if (!target) return;
+        element.addEventListener("mouseenter", () => {
+            cursor.classList.add("active");
+        });
 
-            event.preventDefault();
+        element.addEventListener("mouseleave", () => {
+            cursor.classList.remove("active");
+        });
 
-            target.scrollIntoView({
-                behavior: "smooth",
-                block: "start"
-            });
+    });
+}
+
+
+// MENU MOBILE
+
+const menuButton = document.querySelector(".menu-button");
+const nav = document.querySelector(".nav");
+
+if (menuButton && nav) {
+
+    menuButton.addEventListener("click", () => {
+
+        nav.classList.toggle("mobile-open");
+
+    });
+
+}
+
+
+// FECHAR MENU AO CLICAR
+
+document.querySelectorAll(".nav a").forEach((link) => {
+
+    link.addEventListener("click", () => {
+
+        nav.classList.remove("mobile-open");
+
+    });
+
+});
+
+
+// REVEAL AO ENTRAR NA TELA
+
+const observer = new IntersectionObserver(
+    (entries) => {
+
+        entries.forEach((entry) => {
+
+            if (entry.isIntersecting) {
+
+                entry.target.classList.add("visible");
+
+            }
 
         });
+
+    },
+    {
+        threshold: 0.12
+    }
+);
+
+
+document
+    .querySelectorAll(
+        ".statement-content, .system, .work-card, .process-grid article, .about-content, .contact-content"
+    )
+    .forEach((element) => {
+
+        observer.observe(element);
 
     });
 
 
-    /* =========================
-       IMAGE FALLBACK
-    ========================= */
+// ANO AUTOMÁTICO
 
-    const founderImage = document.querySelector(".image-card img");
+const yearElements = document.querySelectorAll(
+    ".footer-bottom span:first-child"
+);
 
-    if (founderImage) {
+yearElements.forEach((element) => {
 
-        founderImage.addEventListener("error", () => {
-
-            console.warn(
-                "Não foi possível carregar eduardo.jpg.jpeg. " +
-                "Verifique se o arquivo está na mesma pasta do index.html."
-            );
-
-        });
-
-    }
-
-
-    /* =========================
-       MENU MOBILE
-    ========================= */
-
-    const menuButton = document.querySelector(".menu-button");
-    const nav = document.querySelector(".nav");
-
-    if (menuButton && nav) {
-
-        let menuOpen = false;
-
-        menuButton.addEventListener("click", () => {
-
-            menuOpen = !menuOpen;
-
-            nav.classList.toggle("menu-open", menuOpen);
-
-        });
-
-    }
+    element.innerHTML = `© ${new Date().getFullYear()} NORTH`;
 
 });
