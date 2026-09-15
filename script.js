@@ -1,103 +1,100 @@
-/* =========================================================
-   NORTH — JAVASCRIPT
-========================================================= */
+/* =========================================
+   NORTH — INTERAÇÕES
+========================================= */
 
 
-/* =========================================================
-   CUSTOM CURSOR
-========================================================= */
+/* CURSOR */
 
 const cursor = document.querySelector(".cursor");
-const cursorRing = document.querySelector(".cursor-ring");
 
-if (cursor && cursorRing) {
+if (cursor) {
 
-    document.addEventListener("mousemove", (event) => {
+  document.addEventListener("mousemove", (e) => {
 
-        cursor.style.left = `${event.clientX}px`;
-        cursor.style.top = `${event.clientY}px`;
+    cursor.style.left = e.clientX + "px";
+    cursor.style.top = e.clientY + "px";
 
-        cursorRing.style.left = `${event.clientX}px`;
-        cursorRing.style.top = `${event.clientY}px`;
-
-    });
-
-
-    const interactiveElements = document.querySelectorAll(
-        "a, button, .system-item, .process-item"
-    );
-
-
-    interactiveElements.forEach((element) => {
-
-        element.addEventListener("mouseenter", () => {
-            document.body.classList.add("cursor-hover");
-        });
-
-        element.addEventListener("mouseleave", () => {
-            document.body.classList.remove("cursor-hover");
-        });
-
-    });
+  });
 
 }
 
 
-/* =========================================================
-   MOBILE MENU
-========================================================= */
+/* MENU MOBILE */
 
 const menuButton = document.querySelector(".menu-button");
 const nav = document.querySelector(".nav-links");
 
 if (menuButton && nav) {
 
-    menuButton.addEventListener("click", () => {
+  menuButton.addEventListener("click", () => {
 
-        nav.classList.toggle("mobile-open");
+    nav.classList.toggle("mobile-open");
 
-        menuButton.classList.toggle("active");
-
-    });
+  });
 
 }
 
 
-/* =========================================================
-   FECHAR MENU AO CLICAR
-========================================================= */
+/* FECHAR MENU AO CLICAR */
 
-const navLinks = document.querySelectorAll(".nav-links a");
+document.querySelectorAll(".nav-links a").forEach(link => {
 
-navLinks.forEach((link) => {
+  link.addEventListener("click", () => {
 
-    link.addEventListener("click", () => {
+    if (nav) {
+      nav.classList.remove("mobile-open");
+    }
 
-        nav.classList.remove("mobile-open");
-
-        if (menuButton) {
-            menuButton.classList.remove("active");
-        }
-
-    });
+  });
 
 });
 
 
-/* =========================================================
-   IMAGE FALLBACK
-========================================================= */
+/* SCROLL SUAVE */
 
-const founderImage = document.querySelector(".founder-image");
+document.querySelectorAll('a[href^="#"]').forEach(link => {
 
-if (founderImage) {
+  link.addEventListener("click", function (e) {
 
-    founderImage.addEventListener("error", () => {
+    const target = document.querySelector(this.getAttribute("href"));
 
-        console.warn(
-            "A imagem Eduardo não foi encontrada. Verifique se o arquivo se chama exatamente: eduardo.jpg.jpeg"
-        );
+    if (!target) return;
 
+    e.preventDefault();
+
+    target.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
     });
 
-}
+  });
+
+});
+
+
+/* PEQUENO EFEITO DE HOVER NOS SISTEMAS */
+
+document.querySelectorAll(".system-item").forEach(item => {
+
+  item.addEventListener("mouseenter", () => {
+
+    const arrow = item.querySelector(".system-arrow");
+
+    if (arrow) {
+      arrow.style.color = "#5548ff";
+    }
+
+  });
+
+
+  item.addEventListener("mouseleave", () => {
+
+    const arrow = item.querySelector(".system-arrow");
+
+    if (arrow) {
+      arrow.style.color = "";
+    }
+
+  });
+
+});
